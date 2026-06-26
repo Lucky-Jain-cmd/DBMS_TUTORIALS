@@ -1,0 +1,467 @@
+********************************************************************************************************************************************************************************************************************************************
+Anomalies are problems that occur due to poor database design and data redundancy. 
+__________________________________________________________________________________
+There are three main types:
+
+Update Anomaly: The same information is stored multiple times, so updating it requires changing multiple rows. Missing even one update causes inconsistent data.
+Insertion Anomaly: New information cannot be inserted unless unrelated data is also available.
+Deletion Anomaly: Deleting a record unintentionally removes other valuable information from the database.
+
+Normalization is used to eliminate these anomalies by organizing data into well-structured tables and reducing redundancy.
+__________________________________________________________________________________________________________________________
+
+Why do we perform Normalization in DBMS?
+
+The biggest answer is:
+
+To remove Data Redundancy
+To avoid Update Anomaly
+To avoid Insertion Anomaly
+To avoid Deletion Anomaly
+
+Let's understand these three anomalies in the simplest possible way with lots of real-life examples.
+
+First, What is an Anomaly?
+Definition (Interview)
+
+An Anomaly is an undesirable problem or inconsistency that occurs in a database because the data is stored in a poorly designed table.
+
+Simple English
+
+Anomaly means
+
+"A problem that happens because the same information is stored multiple times."
+
+Think of it like this:
+
+Imagine your phone has the same contact saved 20 times.
+
+If the number changes, you'll have to update it 20 times.
+
+If you forget one, now you have two different numbers.
+
+That is an anomaly.
+
+Example Table
+
+Suppose a college stores data like this.
+
+StudentID	Student Name	Course	Teacher	Teacher Phone
+101	Rahul	DBMS	Sharma	9999
+102	Amit	DBMS	Sharma	9999
+103	Priya	DBMS	Sharma	9999
+104	Neha	Java	Gupta	8888
+105	Ankit	Java	Gupta	8888
+
+Notice something?
+
+Teacher information is repeated again and again.
+
+Sharma
+9999
+
+appears 3 times
+
+Gupta
+8888
+
+appears 2 times
+
+This repetition creates anomalies.
+
+1. Update Anomaly
+Definition
+
+An Update Anomaly occurs when the same data exists in multiple rows and must be updated everywhere.
+
+If one copy is not updated, the database becomes inconsistent.
+
+Example
+
+Suppose Teacher Sharma changes his phone number.
+
+Old number
+
+9999
+
+New number
+
+7777
+
+Now you have to update
+
+Row 1
+
+Row 2
+
+Row 3
+
+Suppose you update only two rows.
+
+Student	Teacher	Phone
+Rahul	Sharma	7777
+Amit	Sharma	7777
+Priya	Sharma	9999
+
+Now what is Sharma's phone number?
+
+7777 ?
+
+or
+
+9999 ?
+
+Nobody knows.
+
+Database has become inconsistent.
+
+This is called
+
+Update Anomaly
+Real Life Example
+
+Imagine a company.
+
+Employee records
+
+Employee	Department	Manager
+A	HR	Rohit
+B	HR	Rohit
+C	HR	Rohit
+
+Manager changes from Rohit to Mohit.
+
+You must update all rows.
+
+If one row still says Rohit,
+
+Database becomes incorrect.
+
+Another Example
+
+Amazon stores warehouse address.
+
+Product	Warehouse
+Laptop	Delhi
+Mouse	Delhi
+Keyboard	Delhi
+
+Warehouse shifts to Noida.
+
+Need to update every row.
+
+Forget one row.
+
+Now some products are in Delhi.
+
+Some are in Noida.
+
+Wrong information.
+
+Interview Definition
+
+Update anomaly occurs when changing one piece of information requires multiple updates, and failure to update all copies causes inconsistent data.
+
+2. Insertion Anomaly
+Definition
+
+Insertion anomaly occurs when you cannot insert information because some unrelated information is missing.
+
+Example
+
+Suppose a new teacher joins.
+
+Teacher
+
+Mr. Verma
+
+Phone
+
+6666
+
+Course
+
+AI
+
+But
+
+No student has enrolled yet.
+
+Your table is
+
+Student	Course	Teacher
+
+How will you insert
+
+Teacher = Verma
+
+There is no Student ID.
+
+No Student Name.
+
+No Student record.
+
+You cannot insert the teacher.
+
+Even though teacher exists.
+
+Why?
+
+Because your table mixes
+
+Student data
+
+Teacher data
+
+Course data
+
+all together.
+
+This is
+
+Insertion Anomaly
+Real Life Example
+
+Hospital Database
+
+Patient	Doctor
+Rahul	Dr. A
+Amit	Dr. A
+
+New doctor joins.
+
+No patients yet.
+
+Can you insert doctor?
+
+No.
+
+Because patient columns are compulsory.
+
+This is insertion anomaly.
+
+Another Example
+
+Company Database
+
+Employee	Project
+A	Bank App
+B	Bank App
+
+New Project
+
+AI Chatbot
+
+No employees assigned yet.
+
+Cannot insert project.
+
+Again
+
+Insertion anomaly.
+
+Interview Definition
+
+Insertion anomaly occurs when new information cannot be inserted because another unrelated piece of information is required.
+
+3. Deletion Anomaly
+Definition
+
+Deletion anomaly occurs when deleting one record unintentionally deletes important information.
+
+Example
+
+Table
+
+Student	Course	Teacher
+Rahul	DBMS	Sharma
+Amit	Java	Gupta
+
+Suppose Rahul leaves college.
+
+Delete Rahul.
+
+Table becomes
+
+Student	Course	Teacher
+Amit	Java	Gupta
+
+Now
+
+Who teaches DBMS?
+
+No record.
+
+Teacher Sharma information has disappeared.
+
+Although teacher still works in college.
+
+Deleting student deleted teacher information.
+
+This is
+
+Deletion Anomaly
+Real Life Example
+
+Hospital
+
+Patient	Doctor
+Rahul	Dr. Sharma
+
+Rahul gets discharged.
+
+Delete record.
+
+Now
+
+Doctor Sharma disappears from database.
+
+Doctor still exists.
+
+But information is lost.
+
+Deletion anomaly.
+
+Another Example
+
+Company
+
+Employee	Department
+Rahul	Cyber Security
+
+Rahul resigns.
+
+Delete row.
+
+Now
+
+Cyber Security department disappears.
+
+Wrong.
+
+Department still exists.
+
+Interview Definition
+
+Deletion anomaly occurs when deleting one record unintentionally removes other valuable information.
+
+Why Do These Problems Occur?
+
+Because multiple entities are stored in one table.
+
+Example
+
+Student
+
+Teacher
+
+Course
+
+All are mixed.
+
+This causes
+
+Redundancy
+
+↓
+
+Repeated Data
+
+↓
+
+Anomalies
+How Normalization Solves This?
+
+Instead of one big table
+
+We create multiple tables.
+
+Student Table
+StudentID	Student Name
+101	Rahul
+102	Amit
+103	Priya
+Teacher Table
+TeacherID	Teacher Name	Phone
+T1	Sharma	9999
+T2	Gupta	8888
+Course Table
+CourseID	Course	TeacherID
+C1	DBMS	T1
+C2	Java	T2
+Enrollment Table
+StudentID	CourseID
+101	C1
+102	C1
+103	C2
+
+Now
+
+Teacher phone changes?
+
+Update only
+
+Teacher Table
+
+once.
+
+No repetition.
+
+New teacher joins?
+
+Insert into Teacher table.
+
+No students needed.
+
+Student leaves?
+
+Delete only Enrollment.
+
+Teacher remains safe.
+
+Real-Life Analogy
+
+Imagine a school office.
+
+Before Normalization
+
+Every student form contains:
+
+Principal Name
+Principal Phone
+School Address
+Teacher Name
+Teacher Phone
+
+If the principal changes phone number,
+
+You must update every student's form.
+
+Thousands of updates!
+
+After Normalization
+
+Keep separate records:
+
+Student Register
+Teacher Register
+Principal Register
+
+If the principal changes phone number,
+
+Update one record only.
+
+That's the idea behind normalization.
+
+Quick Comparison
+Anomaly	What Happens?	Example
+Update Anomaly	Same data must be updated in many places	Teacher phone changes; update every row
+Insertion Anomaly	Cannot insert data without unrelated data	Cannot add a teacher until a student exists
+Deletion Anomaly	Deleting one row removes other useful data	Deleting the last student also deletes teacher information
+Memory Trick (Interview)
+
+Remember the acronym UID:
+
+U = Update Anomaly → Updating one fact requires changing it in many rows.
+I = Insertion Anomaly → Inserting new information is impossible without unrelated data.
+D = Deletion Anomaly → Deleting one record accidentally deletes important information.
