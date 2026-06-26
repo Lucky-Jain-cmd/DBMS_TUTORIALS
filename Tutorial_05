@@ -1,0 +1,392 @@
+Functional Dependency (FD)
+Interview Definition (Exact)
+
+A Functional Dependency (FD) is a relationship between two attributes in which the value of one attribute uniquely determines the value of another attribute.
+
+Simple Definition
+
+A Functional Dependency means:
+
+If you know one value, you can uniquely determine another value.
+
+Think of it like a question and answer.
+
+Question → Answer
+
+If the question always gives one unique answer, then a Functional Dependency exists.
+
+Real-Life Example 1: Student Roll Number
+
+Suppose we have this table:
+
+RollNo	Name	Branch	Phone
+101	Lucky	CSE	9876543210
+102	Rahul	ECE	9123456789
+103	Priya	IT	9988776655
+
+Question:
+
+If I tell you:
+
+RollNo = 101
+
+Can you find the student's name?
+
+Yes.
+
+101 → Lucky
+
+Can you find the branch?
+
+Yes.
+
+101 → CSE
+
+Can you find the phone number?
+
+Yes.
+
+101 → 9876543210
+
+Therefore,
+
+RollNo → Name
+RollNo → Branch
+RollNo → Phone
+
+These are Functional Dependencies.
+
+Why?
+
+Because every Roll Number is unique.
+
+One Roll Number always refers to one specific student.
+
+Mathematical Notation
+
+Functional Dependency is written as:
+
+A → B
+
+Read as:
+
+A determines B
+
+or
+
+B is functionally dependent on A
+
+Example:
+
+RollNo → Name
+
+means
+
+"If RollNo is known, Name can be uniquely determined."
+
+Meaning of the Arrow (→)
+
+Many students memorize the arrow but don't understand it.
+
+RollNo → Name
+
+means
+
+Roll Number
+       ↓
+Find Name
+
+Similarly,
+
+EmployeeID → Salary
+
+means
+
+Employee ID
+      ↓
+Find Salary
+Real-Life Example 2: Aadhaar Number
+
+Suppose:
+
+Aadhaar	Name	DOB
+1234	Lucky	10-Jan-2003
+5678	Rahul	15-Feb-2002
+
+Given:
+
+Aadhaar = 1234
+
+Can you find Name?
+
+Yes.
+
+Can you find DOB?
+
+Yes.
+
+Therefore,
+
+Aadhaar → Name
+Aadhaar → DOB
+Real-Life Example 3: Vehicle Registration Number
+VehicleNo	Owner
+UP32AB1234	Lucky
+DL10XY4321	Rahul
+
+Vehicle Number uniquely identifies the owner.
+
+VehicleNo → Owner
+Real-Life Example 4: Employee Database
+EmpID	Name	Department	Salary
+E101	Amit	HR	50000
+E102	Neha	IT	70000
+
+Here,
+
+EmpID → Name
+EmpID → Department
+EmpID → Salary
+
+because Employee ID is unique.
+
+Example That is NOT a Functional Dependency
+
+Suppose:
+
+Name	City
+Lucky	Delhi
+Lucky	Jaipur
+
+Can we say:
+
+Name → City
+
+No.
+
+Why?
+
+Because:
+
+Lucky
+
+gives two cities.
+
+Delhi
+
+Jaipur
+
+One input gives multiple outputs.
+
+This violates Functional Dependency.
+
+Rule of Functional Dependency
+
+For a Functional Dependency:
+
+One Input
+
+must produce
+
+One Output
+
+It is okay if many inputs produce the same output.
+
+Example:
+
+Student	Branch
+Lucky	CSE
+Rahul	CSE
+Priya	CSE
+
+Here,
+
+Student → Branch
+
+is valid if student names are unique.
+
+But
+
+Branch → Student
+
+is not valid.
+
+Why?
+
+CSE
+
+gives:
+
+Lucky
+
+Rahul
+
+Priya
+
+Multiple outputs.
+
+Another Easy Example
+
+Suppose:
+
+Country	Capital
+India	New Delhi
+Japan	Tokyo
+France	Paris
+Country → Capital
+
+Valid.
+
+But
+
+Capital → Country
+
+is also valid in this table because each capital belongs to only one country.
+
+Interview Trick Question
+
+Consider:
+
+Department	HOD
+CSE	Dr. Ravi
+IT	Dr. Neha
+ECE	Dr. Rahul
+
+Can we say
+
+Department → HOD
+
+Yes.
+
+Each department has one HOD.
+
+Can we say
+
+HOD → Department
+
+Only if one HOD manages exactly one department. If an HOD manages multiple departments, then this FD is not valid.
+
+Always judge Functional Dependencies based on the business rules, not just the table.
+
+Formal Rule
+
+Suppose
+
+A → B
+
+means
+
+Whenever two rows have the same value of A,
+
+they must have the same value of B.
+
+Example:
+
+RollNo	Name
+101	Lucky
+101	Lucky
+
+Valid.
+
+But
+
+RollNo	Name
+101	Lucky
+101	Rahul
+
+Invalid.
+
+Because
+
+RollNo → Name
+
+is violated.
+
+Functional Dependency vs Primary Key
+
+Students often confuse these.
+
+Suppose:
+
+RollNo	Name	Branch
+101	Lucky	CSE
+
+Primary Key:
+
+RollNo
+
+Functional Dependencies:
+
+RollNo → Name
+RollNo → Branch
+
+A Primary Key determines all other attributes in the table, so every primary key creates Functional Dependencies.
+
+However, not every Functional Dependency comes from a primary key.
+
+Example:
+
+Department	HOD
+CSE	Dr. Ravi
+IT	Dr. Neha
+
+Here,
+
+Department → HOD
+
+is a Functional Dependency, even though Department may not be the primary key of a larger university database.
+
+Why Functional Dependency is Important in Normalization
+
+Normalization uses Functional Dependencies to detect problems.
+
+Suppose:
+
+RollNo → Department
+
+Department → HOD
+
+From these dependencies, we can identify:
+
+Partial Dependency
+Transitive Dependency
+Redundant data
+
+These concepts are exactly what 2NF and 3NF remove.
+
+Common Interview Questions
+Q1. What is Functional Dependency?
+
+Answer:
+
+A Functional Dependency is a relationship in which one attribute uniquely determines another attribute. It is represented as A → B, meaning the value of A uniquely determines the value of B.
+
+Q2. How do you identify a Functional Dependency?
+
+Answer:
+
+If two rows have the same value for attribute A, they must also have the same value for attribute B. If this condition always holds, then A → B is a valid Functional Dependency.
+
+Q3. Give a real-life example of Functional Dependency.
+
+Answer:
+
+RollNo → Name
+EmployeeID → Salary
+AadhaarNumber → DateOfBirth
+PassportNumber → Nationality
+Memory Trick
+
+Think of a Functional Dependency as a Question → Unique Answer.
+
+RollNo
+   ↓
+Name
+EmployeeID
+      ↓
+Salary
+Vehicle Number
+       ↓
+Owner
+
+If one input always gives one unique output, then a Functional Dependency exists.
