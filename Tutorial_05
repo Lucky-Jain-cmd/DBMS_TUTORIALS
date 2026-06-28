@@ -390,3 +390,488 @@ Vehicle Number
 Owner
 
 If one input always gives one unique output, then a Functional Dependency exists.
+
+
+What is Functional Dependency?
+Interview Definition
+
+A Functional Dependency (FD) is a relationship between two attributes in a relation where the value of one attribute uniquely determines the value of another attribute.
+
+It is represented as:
+
+X → Y
+
+Read as:
+
+X determines Y
+
+or
+
+Y is functionally dependent on X.
+
+Simple English
+
+If you know X, then you can find Y.
+
+Example:
+
+Student_ID → Student_Name
+
+Knowing Student_ID tells you exactly one Student_Name.
+
+Hinglish
+
+Agar tumhare paas Student_ID hai,
+
+to tum Student_Name easily bata sakte ho.
+
+Matlab
+
+Student_ID → Student_Name
+Example
+Student_ID	Name	Course
+101	Lucky	Java
+102	Rahul	Python
+103	Aman	DBMS
+
+Here
+
+Student_ID → Name
+Student_ID → Course
+
+Because every Student_ID is unique.
+
+Important Terms
+Determinant
+
+Left side
+
+Student_ID → Name
+
+Student_ID = Determinant
+
+Dependent
+
+Right side
+
+Student_ID → Name
+
+Name = Dependent Attribute
+
+Types of Functional Dependencies
+
+There are mainly 7 important types for interviews.
+
+Trivial FD
+Non-Trivial FD
+Completely Non-Trivial FD
+Full Functional Dependency
+Partial Dependency
+Transitive Dependency
+Multivalued Dependency (advanced)
+
+Let's study each.
+
+1. Trivial Functional Dependency
+Definition
+
+If
+
+Y ⊆ X
+
+then it is called Trivial FD.
+
+Means
+
+Right side already exists on left side.
+
+Example
+
+(A,B) → A
+
+A already exists.
+
+Hence
+
+Trivial.
+
+Another Example
+
+(Student_ID, Name)
+↓
+
+Student_ID
+
+Written as
+
+(Student_ID, Name) → Student_ID
+
+Again,
+
+Student_ID already exists.
+
+Why is it called trivial?
+
+Because it gives no new information.
+
+Interview Question
+
+Is
+
+(A,B,C) → (A,C)
+
+Trivial?
+
+Answer:
+
+Yes.
+
+Because
+
+A,C already belong to left side.
+
+2. Non-Trivial Functional Dependency
+
+Definition
+
+If
+
+Y ⊄ X
+
+then
+
+Non-Trivial FD.
+
+Example
+
+Student_ID → Name
+
+Name isn't on the left side.
+
+Hence
+
+Non-Trivial.
+
+Example
+
+Roll_No → Department
+
+Department isn't on the left.
+
+So
+
+Non-Trivial.
+
+Difference
+(A,B) → A
+
+Trivial
+
+(A,B) → C
+
+Non-Trivial
+
+3. Completely Non-Trivial Functional Dependency
+
+Definition
+
+If
+
+X ∩ Y = Ø
+
+(No common attributes)
+
+Example
+
+Employee_ID → Salary
+
+Common attribute?
+
+None.
+
+Hence
+
+Completely Non-Trivial.
+
+Another Example
+
+Roll_No → Name
+
+No common attributes.
+
+Hence
+
+Completely Non-Trivial.
+
+Comparison
+
+(A,B) → A
+
+Trivial
+
+(A,B) → C
+
+Completely Non-Trivial
+
+4. Full Functional Dependency
+
+Very Important for Interviews
+
+Definition
+
+If an attribute depends on the entire candidate key, not on any part of it.
+
+Example
+
+Suppose
+
+(Student_ID, Subject)
+
+is composite key.
+
+Table
+
+Student_ID	Subject	Marks
+101	Math	90
+101	Java	88
+
+Dependency
+
+(Student_ID, Subject) → Marks
+
+Need both Student_ID and Subject.
+
+Student_ID alone?
+
+No.
+
+Subject alone?
+
+No.
+
+Need both.
+
+Therefore
+
+Full Functional Dependency.
+
+Real-Life Example
+
+Movie Booking
+
+Composite Key
+
+(Screen_ID, Seat_No)
+
+determines
+
+Booking_Status
+
+Need both.
+
+5. Partial Dependency
+
+Very Very Important
+
+Definition
+
+When a non-prime attribute depends on only part of a composite key.
+
+Table
+
+Student_ID	Subject	Student_Name
+101	Java	Lucky
+
+Composite Key
+
+(Student_ID, Subject)
+
+Dependency
+
+Student_ID → Student_Name
+
+Student_Name doesn't need Subject.
+
+Depends only on Student_ID.
+
+Hence
+
+Partial Dependency.
+
+Visualization
+
+Composite Key
+
+(Student_ID, Subject)
+
+↓
+
+Student_ID
+
+↓
+
+Student_Name
+
+Only one part determines Name.
+
+Partial Dependency causes
+
+Redundancy
+
+and
+
+2NF violation.
+
+Full vs Partial
+
+Composite Key
+
+(Student_ID, Subject)
+
+Marks depends on
+
+Both
+
+↓
+
+Full FD
+
+Student_Name depends only on Student_ID
+
+↓
+
+Partial FD
+
+6. Transitive Dependency
+
+One of the most asked interview questions.
+
+Definition
+
+If
+
+A → B
+
+and
+
+B → C
+
+then
+
+A → C
+
+Indirect dependency.
+
+Example
+
+Table
+
+Emp_ID	Dept_ID	Dept_Name
+1	D1	HR
+
+Dependencies
+
+Emp_ID → Dept_ID
+
+Dept_ID → Dept_Name
+
+Therefore
+
+Emp_ID → Dept_Name
+
+This is
+
+Transitive Dependency.
+
+Real-Life Example
+
+Aadhar
+
+Aadhar → City_ID
+
+City_ID → City_Name
+
+Therefore
+
+Aadhar → City_Name
+
+Transitive Dependency violates
+
+3NF
+
+7. Multivalued Dependency (Advanced)
+
+Notation
+
+A ↠ B
+
+Meaning
+
+One attribute determines multiple independent values.
+
+Example
+
+Student
+
+Student	Hobby	Language
+Lucky	Cricket	English
+Lucky	Football	Hindi
+
+Student
+
+↓
+
+Many Hobbies
+
+Student
+
+↓
+
+Many Languages
+
+Independent.
+
+Used mainly in
+
+4NF.
+
+Summary Table
+Type	Definition	Example	Violates
+Trivial	RHS is subset of LHS	(A,B) → A	None
+Non-Trivial	RHS not subset of LHS	A → B	None
+Completely Non-Trivial	No common attributes	A → C	None
+Full FD	Depends on whole composite key	(Student_ID, Subject) → Marks	Needed for 2NF
+Partial Dependency	Depends on part of composite key	Student_ID → Student_Name	Violates 2NF
+Transitive Dependency	Indirect dependency	Emp_ID → Dept_ID → Dept_Name	Violates 3NF
+Multivalued Dependency	One attribute determines multiple independent values	Student ↠ Hobby	Violates 4NF
+Interview Questions
+Q1. What is Functional Dependency?
+
+Answer:
+A Functional Dependency is a relationship between attributes where one attribute uniquely determines another. It is represented as X → Y.
+
+Q2. What is the difference between Full and Partial Dependency?
+
+Answer:
+
+Full Dependency: The dependent attribute requires the entire composite key.
+Partial Dependency: The dependent attribute requires only part of the composite key.
+Q3. What is a Transitive Dependency?
+
+Answer:
+A transitive dependency occurs when one non-key attribute depends on another non-key attribute indirectly. If A → B and B → C, then A → C is a transitive dependency.
+
+Q4. Which normal forms are related to these dependencies?
+1NF: Removes repeating groups.
+2NF: Removes Partial Dependencies.
+3NF: Removes Transitive Dependencies.
+4NF: Removes Multivalued Dependencies.
+5NF: Handles Join Dependencies.
+Memory Trick (Very Useful)
+Trivial → RHS is already in LHS.
+Non-Trivial → RHS is new.
+Completely Non-Trivial → LHS and RHS have nothing in common.
+Full Dependency → Needs the whole composite key.
+Partial Dependency → Needs only part of the composite key.
+Transitive Dependency → Indirect dependency through another attribute.
+Multivalued Dependency → One attribute independently determines multiple values.
